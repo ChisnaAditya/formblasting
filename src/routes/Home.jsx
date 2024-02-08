@@ -1,4 +1,4 @@
-import { Alert, Button, FloatingLabel } from "flowbite-react";
+import { Alert, Button, FloatingLabel, Modal } from "flowbite-react";
 import TextInputField from "../components/TextInputField";
 import SelectInputField from "../components/SelectInputField";
 import RadioInputField from "../components/RadioInputField";
@@ -11,6 +11,7 @@ import {
 } from "../data/dataForm";
 import { useState } from "react";
 import axios from "axios";
+import Jumbotron from "../components/Jumbotron";
 
 function Home() {
   const [nama, setNama] = useState("");
@@ -23,10 +24,13 @@ function Home() {
   const [instagram, setInstagram] = useState("");
   const [pertanyaan, setPertanyaan] = useState("");
 
+  const [openModal, setOpenModal] = useState(false);
+
   const handleCreate = (e) => {
     e.preventDefault();
-    alert("Berhasil.. Setelah ini anda akan dialihkan ke program IEP");
-    window.location.href = "https://program.kampunginggrislc.com/intensive";
+    setOpenModal(false);
+    alert("berhasil");
+    window.location.href = "https://program.kampunginggrislc.com/intensivee";
     // axios
     //   .post("http://localhost:3306/student", {
     //     nama: nama,
@@ -49,22 +53,7 @@ function Home() {
 
   return (
     <div className="">
-      <div className="container">
-        <article className="prose max-w-full mx-auto pt-[2rem] lg:pt-[4rem]">
-          <h1 className="text-xl lg:text-3xl">
-            Form Kehadiran Registrasi Ulang (check-in)
-          </h1>
-          <p className="text-sm lg:text-lg">
-            Hai semua, salam dari mincaaa~ 👋🏻👋🏻 <br /> Bagaimana kabarnya?
-            Semoga tetap sehat & tetap baik-baik saja😇 <br /> Besar harapan
-            gform ini diisi ketika sebelum sampai lokasi registrasi ulang.{" "}
-            <br />
-            ⚠️Sekedar info, Jam Layanan Registrasi Ulang (check-in) dimulai dari
-            jam 08:00 sampai 16:00. Hari Sabtu & Minggu.
-          </p>
-        </article>
-      </div>
-
+      <Jumbotron />
       <form onSubmit={handleCreate}>
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-5 justify-items-center my-10">
           <TextInputField
@@ -133,13 +122,38 @@ function Home() {
           </h1>
           <p>Klik tombol dibawah jika sudah selesai</p>
           <Button
-            type="submit"
+            onClick={() => setOpenModal(true)}
             className="my-4 bg-[#ea1d23] hover:bg-[#ea1d23]/70"
           >
             Kirim
           </Button>
         </div>
       </form>
+
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            {/* <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" /> */}
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Sudah selesai mengisi form dan ingin mengirim sekarang?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" type="submit" onClick={handleCreate}>
+                {"Oke, Kirim sekarang"}
+              </Button>
+              <Button color="gray" onClick={() => setOpenModal(false)}>
+                No, tunggu dulu
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
