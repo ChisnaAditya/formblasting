@@ -50,7 +50,7 @@ function Jumbotron() {
       <figure className="basis-1/2">
         <img alt="hero" src="/hero.png" />
         <p className="lg:hidden px-10 italic">
-          Besar harapan gform ini diisi ketika sebelum sampai lokasi registrasi
+          Besar harapan form ini diisi ketika sebelum sampai lokasi registrasi
           ulang.
         </p>
         <p className="lg:hidden px-10 pt-5 text-sm">
