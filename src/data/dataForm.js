@@ -37,38 +37,38 @@ export const arrCS = [
 export const columnsTabel = [
   {
     name: "Nama",
-    selector: (row) => row.nama,
+    selector: (row) => row.name,
   },
   {
     name: "No. WA",
-    selector: (row) => row.nomor,
+    selector: (row) => row.number_whatsapp,
   },
   {
     name: "Domisili",
-    selector: (row) => row.domisili,
+    selector: (row) => row.domicile,
   },
   {
     name: "Nama CS",
-    selector: (row) => row.cs,
+    selector: (row) => row.customer_service,
   },
   {
     name: "Periode",
-    selector: (row) => row.periode,
+    selector: (row) => row.course_period,
   },
   {
     name: "Tanggal Kehadiran",
-    selector: (row) => row.tanggal,
+    selector: (row) => row.arrival_date,
   },
   {
     name: "Waktu Kehadiran",
-    selector: (row) => row.waktu,
+    selector: (row) => row.arrival_time,
   },
   {
     name: "Akun Instagram",
-    selector: (row) => row.instagram,
+    selector: (row) => row.account_instagram,
   },
   {
     name: "Pertanyaan",
-    selector: (row) => row.pertanyaan,
+    selector: (row) => row.notes,
   },
 ];

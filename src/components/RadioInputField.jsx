@@ -18,6 +18,7 @@ function RadioInputField(props) {
                   name={props.title}
                   value={item}
                   onChange={props.onChangeInput}
+                  required
                 />
                 <Label htmlFor={item} className="font-normal text-gray-700">
                   {item}

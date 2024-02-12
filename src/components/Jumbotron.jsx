@@ -27,7 +27,7 @@ function Jumbotron() {
               Besar harapan gform ini diisi ketika sebelum sampai lokasi
               registrasi ulang.
             </p>
-            <div className="hidden lg:flex">
+            {/* <div className="hidden lg:flex">
               <img
                 alt="arrow"
                 src="/arrow.png"
@@ -43,7 +43,7 @@ function Jumbotron() {
                 src="/arrow.png"
                 className="animate-bounce w-[50px] pt-10"
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </article>

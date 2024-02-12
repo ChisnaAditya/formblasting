@@ -8,9 +8,11 @@ function SelectInputField(props) {
       </h1>
       <div className="flex flex-col gap-2 justify-center w-full border-[1px] rounded-xl px-5 pt-10 pb-2">
         <p className="font-normal italic text-gray-700">{props.desc}</p>
-        <Select id="cs" required onChange={props.onChangeInput}>
+        <Select id="cs" name="cs" required onChange={props.onChangeInput}>
           {props.listOfArray.map((item, index) => (
-            <option key={index}>{item}</option>
+            <option key={index} value={item}>
+              {item}
+            </option>
           ))}
         </Select>
       </div>

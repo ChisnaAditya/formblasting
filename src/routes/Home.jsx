@@ -9,9 +9,10 @@ import {
   arrTanggalKehadiran,
   arrWaktuKehadiran,
 } from "../data/dataForm";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import axios from "axios";
 import Jumbotron from "../components/Jumbotron";
+import Loading from "../loading";
 
 function Home() {
   const [nama, setNama] = useState("");
@@ -28,33 +29,56 @@ function Home() {
 
   const handleCreate = (e) => {
     e.preventDefault();
-    setOpenModal(false);
-    alert("berhasil");
-    window.location.href = "https://program.kampunginggrislc.com/intensivee";
-    // axios
-    //   .post("http://localhost:3306/student", {
-    //     nama: nama,
-    //     nomor: nomor,
-    //     domisili: domisili,
-    //     cs: cs,
-    //     periode: periode,
-    //     tanggal: tanggalKehadiran,
-    //     waktu: waktuKehadiran,
-    //     instagram: instagram,
-    //     pertanyaan: pertanyaan,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     alert("Berhasil.. Setelah ini anda akan dialihkan ke program IEP");
-    //     window.location.href = "https://program.kampunginggrislc.com/intensive";
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .post(
+        "https://marketing-service.kampunginggrislc.com/api/marketing-service/survey/create",
+        {
+          name: nama,
+          number_whatsapp: nomor,
+          domicile: domisili,
+          customer_service: cs,
+          course_period: periode,
+          arrival_date: tanggalKehadiran,
+          arrival_time: waktuKehadiran,
+          account_instagram: instagram,
+          notes: pertanyaan,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setOpenModal(!openModal);
+        if (res.data.success) {
+          alert("Berhasil..");
+          setOpenModal(!openModal);
+          setNama("");
+          setNomor("");
+          setDomisili("");
+          setCS("");
+          setPeriode("");
+          setTanggalKehadiran("");
+          setWaktuKehadiran("");
+          setInstagram("");
+          setPertanyaan("");
+          window.location.href =
+            "https://program.kampunginggrislc.com/intensive";
+        } else {
+          alert("gagal..");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleOpenModal = (e) => {
+    e.preventDefault();
+    setOpenModal(!openModal);
   };
 
   return (
     <div className="">
-      <Jumbotron />
-      <form onSubmit={handleCreate}>
+      <Suspense fallback={<Loading />}>
+        <Jumbotron />
+      </Suspense>
+      <form onSubmit={handleOpenModal}>
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-5 justify-items-center my-10">
           <TextInputField
             title="Nama"
@@ -122,38 +146,38 @@ function Home() {
           </h1>
           <p>Klik tombol dibawah jika sudah selesai</p>
           <Button
-            onClick={() => setOpenModal(true)}
+            type="submit"
+            // onClick={() => setOpenModal(true)}
             className="my-4 bg-[#ea1d23] hover:bg-[#ea1d23]/70"
           >
             Kirim
           </Button>
         </div>
-      </form>
-
-      <Modal
-        show={openModal}
-        size="md"
-        onClose={() => setOpenModal(false)}
-        popup
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            {/* <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" /> */}
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Sudah selesai mengisi form dan ingin mengirim sekarang?
-            </h3>
-            <div className="flex justify-center gap-4">
-              <Button color="failure" type="submit" onClick={handleCreate}>
-                {"Oke, Kirim sekarang"}
-              </Button>
-              <Button color="gray" onClick={() => setOpenModal(false)}>
-                No, tunggu dulu
-              </Button>
+        <Modal
+          show={openModal}
+          size="md"
+          onClose={() => setOpenModal(false)}
+          popup
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <div className="text-center">
+              {/* <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" /> */}
+              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                Sudah selesai mengisi form dan ingin mengirim sekarang?
+              </h3>
+              <div className="flex justify-center gap-4">
+                <Button color="failure" type="submit" onClick={handleCreate}>
+                  {"Oke, Kirim sekarang"}
+                </Button>
+                <Button color="gray" onClick={() => setOpenModal(false)}>
+                  No, tunggu dulu
+                </Button>
+              </div>
             </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+          </Modal.Body>
+        </Modal>
+      </form>
     </div>
   );
 }
